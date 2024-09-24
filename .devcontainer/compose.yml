@@ -1,0 +1,10 @@
+services:
+  python:
+    image: uv03/python:3.12
+    build: ./python
+    container_name: 'uvpractice'
+    stdin_open: true
+    tty: true
+    working_dir: '/opt'
+    volumes:
+      - ../python:/opt
