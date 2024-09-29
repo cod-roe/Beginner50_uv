@@ -541,9 +541,9 @@ params_base = {
 	'objective': 'binary',
 	'metric': 'auc',
 	'verbosity':-1,
-	'learning_rate': 0.05,
+	# 'learning_rate': 0.05,
 	'n_estimators':100000,
-	'bagging_freq': 1,
+	# 'bagging_freq': 1,
 	"random_state": 123,
 }
 
@@ -552,13 +552,16 @@ params_base = {
 def objective(trial):
 	#探索するハイパーパラメータ
 	params_tuning = {
+        "max_depth": trial.suggest_int('max_depth', 3, 20),
 		'num_leaves': trial.suggest_int('num_leaves', 8, 256),
 		'min_child_samples': trial.suggest_int('min_child_samples', 5, 200),
 		'min_sum_hessian_in_leaf': trial.suggest_float('min_sum_hessian_in_leaf',1e-5,1e-2,log=True),
 		'feature_fraction': trial.suggest_float('feature_fraction',0.5,1.0),
 		'bagging_fraction': trial.suggest_float('bagging_fraction',0.5,1.0),
-		'lambda_l1': trial.suggest_float('lambda_l1', 1e-2,1e+2,log=True),
-		'lambda_l2': trial.suggest_float('lambda_l2', 1e-2,1e+2,log=True),
+		'lambda_l1': trial.suggest_float('lambda_l1',  0, 10.0),
+		'lambda_l2': trial.suggest_float('lambda_l2',  0, 10.0),
+        'learning_rate': trial.suggest_loguniform('learning_rate', 1e-4, 1e-1),
+        'bagging_freq': trial.suggest_int('bagging_freq', 1, 7),
 	}
 	params_tuning.update(params_base)
 	
