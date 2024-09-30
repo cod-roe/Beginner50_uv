@@ -854,7 +854,7 @@ x_train_lgbm.shape
 
 
 # %%学習lgbm
-m_name = "m_lgbm"
+m_name = "lgbm"
 train_oof_lgbm, imp_lgbm, metrics_lgbm = train_lgb(
     x_train_lgbm,
     y_train,
@@ -912,8 +912,8 @@ df_train_las = pd.DataFrame(
         "pred4": train_oof_tf["pred"],
         "pred_ensemble3": (
             train_oof_lgbm["pred"] + train_oof_dart["pred"] + train_oof_rf["pred"]
-        )
-        + train_oof_tf["pred"] / 4,
+        
+        + train_oof_tf["pred"]) / 4,
         "true": y_train,
     }
 )
@@ -1024,7 +1024,7 @@ def predict_lgb_st(
 # 推論処理
 # =================================================
 print("lgbm")
-m_name = "m_lgbm"
+m_name = "lgbm"
 test_pred_lgbm = predict_lgb_st(
     x_test_lgbm,
     list_nfold=[0, 1, 2, 3, 4],
